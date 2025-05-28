@@ -6,4 +6,8 @@
     <bean id="musicBean"
           class="com.javalessons.RockMusic">
     </bean>
+    <bean id="musicPlayer"
+        class="com.javalessons.MusicPlayer" >
+        <constructor-arg ref="musicBean"/>
+    </bean>
 </beans>
