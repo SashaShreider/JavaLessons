@@ -1,4 +1,4 @@
-package com.javalessons;
+package com.javalessons.springcore;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

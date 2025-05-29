@@ -1,4 +1,4 @@
-package com.javalessons;
+package com.javalessons.springcore;
 
 public class JazzMusic implements Music{
     void init(){

@@ -1,4 +1,4 @@
-package com.javalessons;
+package com.javalessons.javaservlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
