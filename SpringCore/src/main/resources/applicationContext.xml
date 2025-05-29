@@ -15,7 +15,9 @@
     </bean>
 
     <bean id="jazzBean"
-          class="com.javalessons.JazzMusic">
+          class="com.javalessons.JazzMusic"
+          init-method="init"
+          destroy-method="destroy">
     </bean>
 
 
