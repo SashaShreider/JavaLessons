@@ -1,4 +1,4 @@
-package com.javalessons.springcore;
+package com.javalessons.springcore.music;
 
 public interface Music {
     String getSong();
