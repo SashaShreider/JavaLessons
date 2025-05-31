@@ -12,6 +12,7 @@
     <modules>
         <module>ServletsTest</module>
         <module>SpringCore</module>
+        <module>SpringMVC</module>
     </modules>
 
     <properties>
