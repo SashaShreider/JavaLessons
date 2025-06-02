@@ -10,5 +10,11 @@ Hello!!
 <a href="/exit">Exit</a>
 <!--th - артибут Thymeleaf-->
 <p th:text="${message}"></p>
+<form method="post" action = "/exit">
+    <label for="name">Name</label>
+    <input id = "name" type = "text"/>
+    <br>
+    <input type="submit" name="exit" id="exit">
+</form>
 </body>
 </html>
