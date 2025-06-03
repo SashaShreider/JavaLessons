@@ -5,9 +5,10 @@
     <title>Человек</title>
 </head>
 <body>
-<p th:text="${person.getName()}">VALUE</p>
-<br>
-<p th:text="${person.getId()}">VALUE</p>
+<p th:text="${person.id}">VALUE</p>
+<p th:text="${person.name}">VALUE</p>
+<p th:text="${person.email}">VALUE</p>
+<p th:text="${person.age}">VALUE</p>
 
 <a th:href="@{/people/{id}/edit(id=${person.id})}">Edit person</a>
 
