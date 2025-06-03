@@ -56,7 +56,17 @@
                 <version>1.18.38</version>
                 <scope>provided</scope>
             </dependency>
+
+        <!--    hibernate-validator -->
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>9.0.0.Final</version>
+        </dependency>
+
         </dependencies>
+
+
     <build>
         <finalName>simpleCRUD</finalName>
     </build>

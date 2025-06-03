@@ -9,14 +9,19 @@
 <form th:action="@{/people/{id}(id = ${person.id})}" th:method="PATCH" th:object="${person}">
     <label for="name">Enter name: </label>
     <input id="name" th:field="*{name}" type="text"/>
+    <p style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</p>
+    <br>
 
-    <label for="email">Enter name: </label>
-    <input id="email" th:field="*{email}" type="text"/>
-
-    <label for="age">Enter name: </label>
+    <label for="age">Enter Age: </label>
     <input id="age" th:field="*{age}" type="text"/>
-    <br/>
-    <br/>
+    <p style="color:red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Name error</p>
+    <br>
+
+    <label for="email">Enter Email: </label>
+    <input id="email" th:field="*{email}" type="text"/>
+    <p style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Name error</p>
+    <br>
+    <br>
     <input type="submit" value="Update!">
 
 </form>
