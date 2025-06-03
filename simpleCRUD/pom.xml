@@ -49,6 +49,8 @@
             <scope>provided</scope>
         </dependency>
 
+        <!--        Lombok-->
+
     </dependencies>
     <build>
         <finalName>SpringMVC</finalName>
