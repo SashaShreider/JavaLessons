@@ -1,5 +1,7 @@
-package com.javalessons.simple_crud.config;
+package com.javalessons.simple_crud.config.config;
 
+import jakarta.servlet.Filter;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -17,7 +19,15 @@ public class MySpringMvcDispatcherSerlvetIntitializer extends AbstractAnnotation
     }
 
     @Override
-    protected String[] getServletMappings() {
+    public String[] getServletMappings() {
         return new String[]{"/"};
     }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        HiddenHttpMethodFilter hiddenHttpMethodFilter = new HiddenHttpMethodFilter();
+        return new Filter[]{hiddenHttpMethodFilter};
+    }
+
+
 }

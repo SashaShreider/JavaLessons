@@ -1,4 +1,4 @@
-package com.javalessons.simple_crud.config;
+package com.javalessons.simple_crud.config.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
