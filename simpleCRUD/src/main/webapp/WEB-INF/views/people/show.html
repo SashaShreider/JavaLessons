@@ -2,14 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Человек</title>
+    <title>Person</title>
 </head>
 <body>
 <p th:text="${person.id}">VALUE</p>
 <p th:text="${person.name}">VALUE</p>
 <p th:text="${person.email}">VALUE</p>
 <p th:text="${person.age}">VALUE</p>
-
 <a th:href="@{/people/{id}/edit(id=${person.id})}">Edit person</a>
 
 <br/>
