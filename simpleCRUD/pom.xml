@@ -64,7 +64,14 @@
             <version>9.0.0.Final</version>
         </dependency>
 
-        </dependencies>
+        <!--  PostgresSQL-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.4</version>
+        </dependency>
+    </dependencies>
+
 
 
     <build>
