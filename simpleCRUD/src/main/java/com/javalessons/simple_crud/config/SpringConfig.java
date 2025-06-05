@@ -1,7 +1,8 @@
 package com.javalessons.simple_crud.config;
 
+//import com.javalessons.simple_crud.log.LoggingInterceptor;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -75,5 +76,13 @@ public class SpringConfig implements WebMvcConfigurer {
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
+
+//    @Autowired
+//    private LoggingInterceptor loggingInterceptor;
+//
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(loggingInterceptor);
+//    }
 
 }
