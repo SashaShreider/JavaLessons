@@ -1,4 +1,4 @@
-package com.javalessons.simple_crud.config.config;
+package com.javalessons.simple_crud.config;
 
 import jakarta.servlet.Filter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;

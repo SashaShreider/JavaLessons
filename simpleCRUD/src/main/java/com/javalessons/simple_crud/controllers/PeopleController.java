@@ -1,7 +1,7 @@
-package com.javalessons.simple_crud.config.controllers;
+package com.javalessons.simple_crud.controllers;
 
-import com.javalessons.simple_crud.config.dao.PersonDAO;
-import com.javalessons.simple_crud.config.models.Person;
+import com.javalessons.simple_crud.dao.PersonDAO;
+import com.javalessons.simple_crud.models.Person;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
