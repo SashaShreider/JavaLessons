@@ -7,7 +7,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>simpleCRUD</artifactId>
+    <artifactId>simpleCore</artifactId>
     <packaging>war</packaging>
     <name>SpringCore Maven Webapp</name>
     <url>http://maven.apache.org</url>

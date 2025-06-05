@@ -1,4 +1,4 @@
-package com.javalessons.simple_crud.config.models;
+package com.javalessons.simple_crud.models;
 
 
 import jakarta.validation.constraints.Email;
