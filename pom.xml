@@ -14,6 +14,8 @@
         <module>SpringCore</module>
         <module>SpringMVC</module>
         <module>simpleCRUD</module>
+        <module>CRUD-Project-Library</module>
+        <module>HibernateApp</module>
     </modules>
 
     <properties>
