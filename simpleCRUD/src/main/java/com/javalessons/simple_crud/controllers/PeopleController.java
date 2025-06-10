@@ -37,8 +37,6 @@ public class PeopleController {
 
     @GetMapping("/new")
     public String newPerson(@ModelAttribute("person") Person person) {
-        System.out.println("newPerson");
-        System.out.println(person);
         return "people/new";
     }
 

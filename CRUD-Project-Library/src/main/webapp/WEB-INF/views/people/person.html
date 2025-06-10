@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль пользователя</title>
+</head>
+<body>
+<h1>Профиль пользователя</h1>
+<p>ФИО: <span th:text="${person.fio}"></span></p>
+
+<h2>Взятые книги:</h2>
+<div th:each="book : ${ownedBooks}">
+    <span th:text="${book.title}"></span>
+    <form th:action="@{/books/{id}/return(id=${book.id})}" method="post" style="display: inline;">
+        <input type="hidden" name="personId" th:value="${person.id}">
+        <button type="submit">Вернуть</button>
+    </form>
+</div>
+
+<div th:if="${#lists.isEmpty(ownedBooks)}">
+    <p>У пользователя нет взятых книг</p>
+</div>
+</body>
+</html>
