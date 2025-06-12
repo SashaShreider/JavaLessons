@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head></head>
+<body>
+<!-- Фрагмент кнопки "Назад" -->
+<div th:fragment="backButton" class="back-button-container">
+    <a href="javascript:history.back()" class="back-button">
+        ← Назад
+    </a>
+</div>
+
+<style>
+    .back-button-container {
+        margin-bottom: 1rem;
+    }
+    .back-button {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #f0f0f0;
+        color: #333;
+        text-decoration: none;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+        transition: all 0.2s;
+    }
+    .back-button:hover {
+        background-color: #e0e0e0;
+    }
+</style>
+</body>
+</html>
