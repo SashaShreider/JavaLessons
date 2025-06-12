@@ -3,8 +3,8 @@
 <head></head>
 <body>
 <!-- Фрагмент кнопки "Назад" -->
-<div th:fragment="backButton" class="back-button-container">
-    <a href="javascript:history.back()" class="back-button">
+<div class="back-button-container" th:fragment="backButton">
+    <a class="back-button" href="javascript:history.back()">
         ← Назад
     </a>
 </div>
@@ -13,6 +13,7 @@
     .back-button-container {
         margin-bottom: 1rem;
     }
+
     .back-button {
         display: inline-block;
         padding: 0.5rem 1rem;
@@ -23,6 +24,7 @@
         border: 1px solid #ddd;
         transition: all 0.2s;
     }
+
     .back-button:hover {
         background-color: #e0e0e0;
     }

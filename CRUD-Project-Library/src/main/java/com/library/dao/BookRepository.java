@@ -21,8 +21,8 @@ public class BookRepository {
     public List<Book> getOwnedBooks(long personId) {
         return jdbcTemplate.query(
                 """
-                select b.* from book b join person_book pb on pb.book_id = b.id where pb.person_id = ?
-                """,
+                        select b.* from book b join person_book pb on pb.book_id = b.id where pb.person_id = ?
+                        """,
                 new BeanPropertyRowMapper<>(Book.class),
                 personId
         );
@@ -31,11 +31,11 @@ public class BookRepository {
     public List<Book> getUnownedBooks(long personId) {
         return jdbcTemplate.query(
                 """
-                SELECT b.*
-                FROM book b
-                LEFT JOIN person_book pb ON b.id = pb.book_id AND pb.person_id = ?
-                WHERE pb.book_id IS NULL;
-                """,
+                        SELECT b.*
+                        FROM book b
+                        LEFT JOIN person_book pb ON b.id = pb.book_id AND pb.person_id = ?
+                        WHERE pb.book_id IS NULL;
+                        """,
                 new BeanPropertyRowMapper<>(Book.class),
                 personId
         );
@@ -44,10 +44,10 @@ public class BookRepository {
     public List<Person> getPeopleWithBook(long bookId) {
         return jdbcTemplate.query(
                 """
-                SELECT p.* FROM person p
-                JOIN person_book pb ON p.id = pb.person_id
-                WHERE pb.book_id = ?
-                """,
+                        SELECT p.* FROM person p
+                        JOIN person_book pb ON p.id = pb.person_id
+                        WHERE pb.book_id = ?
+                        """,
                 new BeanPropertyRowMapper<>(Person.class),
                 bookId
         );
@@ -56,11 +56,11 @@ public class BookRepository {
     public List<Person> getPeopleWithoutBook(long bookId) {
         return jdbcTemplate.query(
                 """
-                SELECT *
-                FROM person p
-                LEFT JOIN person_book pb ON p.id = pb.person_id and pb.book_id = ?
-                where person_id is null
-                """,
+                        SELECT *
+                        FROM person p
+                        LEFT JOIN person_book pb ON p.id = pb.person_id and pb.book_id = ?
+                        where person_id is null
+                        """,
                 new BeanPropertyRowMapper<>(Person.class),
                 bookId
         );

@@ -1,7 +1,6 @@
 package com.library.dao;
 
 import com.library.model.Book;
-import com.library.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

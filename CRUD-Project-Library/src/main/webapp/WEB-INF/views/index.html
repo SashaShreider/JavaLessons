@@ -2,7 +2,7 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Главная | Библиотека</title>
     <style>
         * {
@@ -136,7 +136,7 @@
     </p>
 
     <div class="nav-cards">
-        <a th:href="@{/people}" class="nav-card">
+        <a class="nav-card" th:href="@{/people}">
             <div class="nav-icon">
                 <i class="fas fa-users"></i>
             </div>
@@ -146,7 +146,7 @@
             </div>
         </a>
 
-        <a th:href="@{/books}" class="nav-card">
+        <a class="nav-card" th:href="@{/books}">
             <div class="nav-icon">
                 <i class="fas fa-book-open"></i>
             </div>

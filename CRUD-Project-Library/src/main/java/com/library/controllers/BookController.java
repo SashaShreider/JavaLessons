@@ -36,14 +36,15 @@ public class BookController {
         model.addAttribute("peopleWithoutBook", bookRepository.getPeopleWithoutBook(id));
         return "books/book";
     }
+
     @PostMapping("/{bookId}/return-book")
-    public String returnBook (@PathVariable("bookId") int bookId, @RequestParam("personId") int personId) {
+    public String returnBook(@PathVariable("bookId") int bookId, @RequestParam("personId") int personId) {
         bookRepository.returnBook(bookId, personId);
         return "redirect:/books/" + bookId;
     }
 
     @PostMapping("/{bookId}/assign-book")
-    public String assignBook (@PathVariable("bookId") int bookId, @RequestParam("personId") int personId) {
+    public String assignBook(@PathVariable("bookId") int bookId, @RequestParam("personId") int personId) {
         bookRepository.assignBook(bookId, personId);
         return "redirect:/books/" + bookId;
     }

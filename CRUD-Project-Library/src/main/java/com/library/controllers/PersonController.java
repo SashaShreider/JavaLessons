@@ -57,13 +57,13 @@ public class PersonController {
     }
 
     @PostMapping("/{personId}/return-book")
-    public String returnBook (@PathVariable("personId") int personId, @RequestParam("bookId") int bookId) {
+    public String returnBook(@PathVariable("personId") int personId, @RequestParam("bookId") int bookId) {
         bookRepository.returnBook(bookId, personId);
         return "redirect:/people/" + personId;
     }
 
     @PostMapping("/{personId}/assign-book")
-    public String assignBook (@PathVariable("personId") int personId, @RequestParam("bookId") int bookId) {
+    public String assignBook(@PathVariable("personId") int personId, @RequestParam("bookId") int bookId) {
         bookRepository.assignBook(bookId, personId);
         return "redirect:/people/" + personId;
     }

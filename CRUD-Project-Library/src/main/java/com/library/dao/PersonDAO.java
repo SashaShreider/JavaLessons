@@ -1,6 +1,5 @@
 package com.library.dao;
 
-import com.library.model.Book;
 import com.library.model.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -23,7 +22,7 @@ public class PersonDAO implements DAO<Person> {
     @Override
     public Optional<Person> getById(long id) {
         return Optional.ofNullable(
-                jdbcTemplate.queryForObject("select * from person where id = ?", new BeanPropertyRowMapper<> (Person.class), id));
+                jdbcTemplate.queryForObject("select * from person where id = ?", new BeanPropertyRowMapper<>(Person.class), id));
     }
 
     @Override
