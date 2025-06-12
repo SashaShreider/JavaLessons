@@ -1,11 +1,165 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Домашняя страница</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная | Библиотека</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2c3e50;
+        }
+
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 800px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            color: #3498db;
+            position: relative;
+            display: inline-block;
+        }
+
+        h1::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 3px;
+            background: #3498db;
+            bottom: -10px;
+            left: 25%;
+            border-radius: 3px;
+        }
+
+        .welcome-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 40px;
+            color: #555;
+        }
+
+        .nav-cards {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .nav-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            width: 250px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: #3498db;
+        }
+
+        .nav-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+
+        .nav-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .nav-description {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        footer {
+            margin-top: 50px;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .nav-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-card {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
-<a th:href = "@{/people}">Список посетителей</a>
-<a th:href = "@{/books}">Список книг</a>
+<div class="container">
+    <h1>Добро пожаловать в библиотеку</h1>
+
+    <p class="welcome-text">
+        Здесь вы можете управлять книгами и посетителями библиотеки.
+        Выберите один из разделов ниже для начала работы.
+    </p>
+
+    <div class="nav-cards">
+        <a th:href="@{/people}" class="nav-card">
+            <div class="nav-icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <div class="nav-title">Посетители</div>
+            <div class="nav-description">
+                Просмотр и управление списком посетителей библиотеки
+            </div>
+        </a>
+
+        <a th:href="@{/books}" class="nav-card">
+            <div class="nav-icon">
+                <i class="fas fa-book-open"></i>
+            </div>
+            <div class="nav-title">Книги</div>
+            <div class="nav-description">
+                Просмотр и управление каталогом книг библиотеки
+            </div>
+        </a>
+    </div>
+
+    <footer>
+        &copy; 2023 Библиотечная система. Все права защищены.
+    </footer>
+</div>
 </body>
 </html>

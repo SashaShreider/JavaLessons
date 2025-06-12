@@ -2,43 +2,201 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Профиль пользователя</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+        }
+        .profile-info {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .book-list {
+            margin-top: 20px;
+        }
+        .book-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        .book-item:hover {
+            background: #f0f8ff;
+            border-color: #3498db;
+        }
+        .btn {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        .btn-danger {
+            background-color: #e74c3c;
+            color: white;
+        }
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+        .empty-state {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        /* Модальное окно */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .close {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover {
+            color: black;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+    </style>
 </head>
 <body>
-<h1>Профиль пользователя</h1>
-<p>ФИО: <span th:text="${person.fio}"></span></p>
+<div class="container">
+    <h1>Профиль пользователя</h1>
 
-<h2>Взятые книги:</h2>
-<div th:each="book : ${ownedBooks}">
-    <span th:text="${book.title}"></span>
-    <form th:action="@{/people/{id}/return-book(id=${person.id})}" method="post" style="display: inline;">
-        <input type="hidden" name="bookId" th:value="${book.id}">
-        <button type="submit">Вернуть</button>
-    </form>
+    <div class="profile-info">
+        <p><strong>ФИО:</strong> <span th:text="${person.fio}"></span></p>
+    </div>
+
+    <div class="book-section">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2>Взятые книги</h2>
+            <button class="btn btn-primary" onclick="document.getElementById('addBookModal').style.display='block'">
+                Добавить книгу
+            </button>
+        </div>
+
+        <div class="book-list">
+            <div th:each="book : ${ownedBooks}" class="book-item">
+                <span th:text="${book.title}" style="font-weight: 500;"></span>
+                <form th:action="@{/people/{id}/return-book(id=${person.id})}" method="post" style="margin: 0;">
+                    <input type="hidden" name="bookId" th:value="${book.id}">
+                    <button type="submit" class="btn btn-danger">Вернуть</button>
+                </form>
+            </div>
+
+            <div th:if="${#lists.isEmpty(ownedBooks)}" class="empty-state">
+                <p>У пользователя нет взятых книг</p>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div th:if="${#lists.isEmpty(ownedBooks)}">
-    <p>У пользователя нет взятых книг</p>
+<!-- Модальное окно для добавления книги -->
+<div id="addBookModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 style="margin: 0;">Добавить книгу пользователю</h3>
+            <span class="close" onclick="document.getElementById('addBookModal').style.display='none'">&times;</span>
+        </div>
+        <form th:action="@{/people/{id}/assign-book(id=${person.id})}" method="post">
+            <select name="bookId" required>
+                <option value="">Выберите книгу...</option>
+                <option th:each="book : ${unOwnedBooks}"
+                        th:value="${book.id}"
+                        th:text="${book.title}">
+                </option>
+            </select>
+            <div class="form-actions">
+                <button type="button" class="btn" onclick="document.getElementById('addBookModal').style.display='none'">Отмена</button>
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </div>
+        </form>
+    </div>
 </div>
 
-<!-- Кнопка для открытия модального окна/формы добавления книги -->
-<button onclick="document.getElementById('addBookModal').style.display='block'">Добавить книгу</button>
-
-
-<!-- Модальное окно/форма для добавления книги -->
-<div id="addBookModal" style="display:none;">
-    <h3>Добавить книгу пользователю</h3>
-    <form th:action="@{/people/{id}/assign-book(id=${person.id})}" method="post">
-        <select name="bookId" required>
-            <option value="">Выберите книгу...</option>
-            <option th:each="book : ${unOwnedBooks}"
-                    th:value="${book.id}"
-                    th:text="${book.title}">
-            </option>
-        </select>
-        <button type="submit">Добавить</button>
-        <button type="button" onclick="document.getElementById('addBookModal').style.display='none'">Отмена</button>
-    </form>
-</div>
-
+<script>
+    // Закрытие модального окна при клике вне его
+    window.onclick = function(event) {
+        if (event.target === document.getElementById('addBookModal')) {
+            document.getElementById('addBookModal').style.display = "none";
+        }
+    }
+</script>
 </body>
+</html>
