@@ -31,10 +31,10 @@ public class BookRepository {
     public List<Book> getUnownedBooks(long personId) {
         return jdbcTemplate.query(
                 """
-                select b.*
-                from book b
-                join public.person_book pb on b.id = pb.book_id
-                where person_id != ?
+                SELECT b.*
+                FROM book b
+                LEFT JOIN person_book pb ON b.id = pb.book_id AND pb.person_id = ?
+                WHERE pb.book_id IS NULL;
                 """,
                 new BeanPropertyRowMapper<>(Book.class),
                 personId
@@ -56,9 +56,10 @@ public class BookRepository {
     public List<Person> getPeopleWithoutBook(long bookId) {
         return jdbcTemplate.query(
                 """
-                SELECT p.* FROM person p
-                JOIN person_book pb ON p.id = pb.person_id
-                WHERE pb.book_id != ?
+                SELECT *
+                FROM person p
+                LEFT JOIN person_book pb ON p.id = pb.person_id and pb.book_id = ?e
+                where person_id is null
                 """,
                 new BeanPropertyRowMapper<>(Person.class),
                 bookId
