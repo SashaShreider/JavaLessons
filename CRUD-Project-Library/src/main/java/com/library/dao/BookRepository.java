@@ -58,7 +58,7 @@ public class BookRepository {
                 """
                 SELECT *
                 FROM person p
-                LEFT JOIN person_book pb ON p.id = pb.person_id and pb.book_id = ?e
+                LEFT JOIN person_book pb ON p.id = pb.person_id and pb.book_id = ?
                 where person_id is null
                 """,
                 new BeanPropertyRowMapper<>(Person.class),
