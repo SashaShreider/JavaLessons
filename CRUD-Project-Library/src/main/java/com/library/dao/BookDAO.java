@@ -63,32 +63,4 @@ public class BookDAO implements DAO<Book> {
                 book.getId()
         );
     }
-
-    public List<Person> getBookOwners(long bookId) {
-        return jdbcTemplate.query(
-                """
-                SELECT p.* FROM person p
-                JOIN person_book pb ON p.id = pb.person_id
-                WHERE pb.book_id = ?
-                """,
-                new BeanPropertyRowMapper<>(Person.class),
-                bookId
-        );
-    }
-
-    public void assignBook(long bookId, long personId) {
-        jdbcTemplate.update(
-                "INSERT INTO person_book (person_id, book_id) VALUES (?, ?)",
-                personId,
-                bookId
-        );
-    }
-
-    public void returnBook(long bookId, long personId) {
-        jdbcTemplate.update(
-                "DELETE FROM person_book WHERE book_id = ? AND person_id = ?",
-                bookId,
-                personId
-        );
-    }
 }

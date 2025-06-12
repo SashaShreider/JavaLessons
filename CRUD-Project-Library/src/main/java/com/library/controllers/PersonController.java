@@ -1,7 +1,10 @@
 package com.library.controllers;
 
+import com.library.dao.BookDAO;
+import com.library.dao.BookRepository;
 import com.library.dao.PersonDAO;
 import com.library.model.Person;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +14,14 @@ import org.springframework.web.bind.annotation.*;
 public class PersonController {
 
     private final PersonDAO personDAO;
+    private final BookDAO bookDAO;
+    private final BookRepository bookRepository;
 
-    public PersonController(PersonDAO personDAO) {
+    @Autowired
+    public PersonController(PersonDAO personDAO, BookDAO bookDAO, BookRepository bookRepository) {
         this.personDAO = personDAO;
+        this.bookDAO = bookDAO;
+        this.bookRepository = bookRepository;
     }
 
     //все пользователи
@@ -25,10 +33,11 @@ public class PersonController {
     }
 
     //страница пользователя
-    @GetMapping({"/{person_id}"})
-    public String getPersonById(Model model, @PathVariable("person_id") long id) {
+    @GetMapping({"/{id}"})
+    public String getPersonById(Model model, @PathVariable("id") long id) {
         model.addAttribute("person", personDAO.getById(id).orElse(null));
-        model.addAttribute("ownedBooks", personDAO.getOwnedBooks(id));
+        model.addAttribute("ownedBooks", bookRepository.getOwnedBooks(id));
+        model.addAttribute("unOwnedBooks", bookRepository.getUnownedBooks(id));
         return "people/person";
     }
 
@@ -47,10 +56,15 @@ public class PersonController {
         return "redirect:/people/list";
     }
 
-//    @PostMapping("/{person_id}/return-book")
-//    public String returnBook (@PathVariable("person_id") int id,
-//    @RequestParam int book_id,
-//    Model model) {
-//    }
+    @PostMapping("/{personId}/return-book")
+    public String returnBook (@PathVariable("personId") int personId, @RequestParam("bookId") int bookId) {
+        bookRepository.returnBook(bookId, personId);
+        return "redirect:/people/" + personId;
+    }
 
+    @PostMapping("/{personId}/assign-book")
+    public String assignBook (@PathVariable("personId") int personId, @RequestParam("bookId") int bookId) {
+        bookRepository.assignBook(bookId, personId);
+        return "redirect:/people/" + personId;
+    }
 }

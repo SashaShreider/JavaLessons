@@ -11,8 +11,8 @@
 <h2>Взятые книги:</h2>
 <div th:each="book : ${ownedBooks}">
     <span th:text="${book.title}"></span>
-    <form th:action="@{/books/{id}/return(id=${book.id})}" method="post" style="display: inline;">
-        <input type="hidden" name="personId" th:value="${person.id}">
+    <form th:action="@{/people/{id}/return-book(id=${person.id})}" method="post" style="display: inline;">
+        <input type="hidden" name="bookId" th:value="${book.id}">
         <button type="submit">Вернуть</button>
     </form>
 </div>
@@ -22,3 +22,24 @@
 </div>
 </body>
 </html>
+
+<!-- Кнопка для открытия модального окна/формы добавления книги -->
+<button onclick="document.getElementById('addBookModal').style.display='block'">Добавить книгу</button>
+
+
+<!-- Модальное окно/форма для добавления книги -->
+<div id="addBookModal" style="display:none;">
+    <h3>Добавить книгу пользователю</h3>
+    <form th:action="@{/people/{id}/assign-book(id=${person.id})}" method="post">
+        <select name="bookId" required>
+            <option value="">Выберите книгу...</option>
+            <option th:each="book : ${unOwnedBooks}"
+                    th:value="${book.id}"
+                    th:text="${book.title}">
+            </option>
+        </select>
+        <button type="submit">Добавить</button>
+        <button type="button" onclick="document.getElementById('addBookModal').style.display='none'">Отмена</button>
+    </form>
+</div>
+

@@ -45,16 +45,4 @@ public class PersonDAO implements DAO<Person> {
     public void delete(Person person) {
         jdbcTemplate.update("delete from person where id = ?", person.getId());
     }
-
-    public List<Book> getOwnedBooks(long id){
-        String sql = """
-                select b.*
-                        from book b
-                join person_book pb on pb.book_id = b.id
-                where pb.person_id = 1
-                """;
-        List<Book> books = jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
-        books.forEach(System.out::println);
-        return books;
-    }
 }
