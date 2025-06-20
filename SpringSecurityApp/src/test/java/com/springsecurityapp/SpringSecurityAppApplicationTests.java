@@ -1,4 +1,4 @@
-package com.javalessons.springsecurityapp;
+package com.springsecurityapp;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

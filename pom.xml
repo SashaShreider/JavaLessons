@@ -16,6 +16,8 @@
         <module>simpleCRUD</module>
         <module>CRUD-Project-Library</module>
         <module>HibernateApp</module>
+        <module>SpringSecurityApp</module>
+
     </modules>
 
     <properties>
