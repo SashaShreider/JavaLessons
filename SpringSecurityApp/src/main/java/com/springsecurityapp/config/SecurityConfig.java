@@ -4,6 +4,7 @@ import com.springsecurityapp.service.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PersonDetailsService personDetailsService;
@@ -28,7 +30,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 // 1. НАСТРОЙКА ДОСТУПА (AUTHORIZATION)
                 .authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")          // Только ADMIN доступен /admin
                 .antMatchers("/auth/login", "/auth/registration", "/error").permitAll()  // Эти URL доступны всем
                 .anyRequest().hasAnyRole("USER", "ADMIN")       // Все остальные URL требуют роли USER или ADMIN
                 .and()
