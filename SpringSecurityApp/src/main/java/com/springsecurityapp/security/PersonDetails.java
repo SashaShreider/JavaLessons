@@ -1,12 +1,14 @@
 package com.springsecurityapp.security;
 
 import com.springsecurityapp.model.Person;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
 
+@Getter
 public class PersonDetails implements UserDetails {
     private final Person person;
 
@@ -48,9 +50,5 @@ public class PersonDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    public Person getPerson() {
-        return person;
     }
 }
