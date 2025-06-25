@@ -25,18 +25,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // конфигурируем spring security и авторизацию
-        http.authorizeRequests()
-                .antMatchers("/auth/login", "/error", "/auth/registration").permitAll()
-                .anyRequest().authenticated()
-                    .and()
-                .formLogin().loginPage("/auth/login")
-                .loginProcessingUrl("/process_login")
-                .defaultSuccessUrl("/hello", true)
-                .failureUrl("/login?error")
-                    .and()
-                .logout().
-                logoutUrl("/logout")
-                .logoutSuccessUrl("login");
+        http
+                // 1. НАСТРОЙКА ДОСТУПА (AUTHORIZATION)
+                .authorizeRequests()
+                .antMatchers("/admin").hasRole("ADMIN")          // Только ADMIN доступен /admin
+                .antMatchers("/auth/login", "/auth/registration", "/error").permitAll()  // Эти URL доступны всем
+                .anyRequest().hasAnyRole("USER", "ADMIN")       // Все остальные URL требуют роли USER или ADMIN
+                .and()
+
+                // 2. НАСТРОЙКА ФОРМЫ ЛОГИНА (LOGIN)
+                .formLogin()
+                .loginPage("/auth/login")                      // Кастомная страница логина
+                .loginProcessingUrl("/process_login")           // URL для обработки формы логина
+                .defaultSuccessUrl("/hello", true)              // Перенаправление после успешного входа
+                .failureUrl("/login?error")                     // Перенаправление при ошибке входа
+                .and()
+
+                // 3. НАСТРОЙКА ВЫХОДА (LOGOUT)
+                .logout()
+                .logoutUrl("/logout")                          // URL для выхода
+                .logoutSuccessUrl("/login");                   // Перенаправление после выхода
     }
 
     //настраиваем аутентификацию

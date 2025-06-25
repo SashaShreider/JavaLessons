@@ -30,4 +30,6 @@ public class Person {
     @Column
     private String password;
 
+    @Column
+    private String role;
 }
