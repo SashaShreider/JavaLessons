@@ -3,18 +3,20 @@ package com.springsecurityapp.config;
 import com.springsecurityapp.service.PersonDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
-
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@Configuration
+@EnableMethodSecurity(prePostEnabled = true) // Заменяет @EnableGlobalMethodSecurity
+public class SecurityConfig {
 
     private final PersonDetailsService personDetailsService;
 
@@ -23,38 +25,43 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.personDetailsService = personDetailsService;
     }
 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        // конфигурируем spring security и авторизацию
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // 1. НАСТРОЙКА ДОСТУПА (AUTHORIZATION)
-                .authorizeRequests()
-                .antMatchers("/auth/login", "/auth/registration", "/error").permitAll()  // Эти URL доступны всем
-                .anyRequest().hasAnyRole("USER", "ADMIN")       // Все остальные URL требуют роли USER или ADMIN
-                .and()
+                // 1. Настройка авторизации
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/login", "/auth/registration", "/error").permitAll()
+                        .anyRequest().hasAnyRole("USER", "ADMIN")
+                )
 
-                // 2. НАСТРОЙКА ФОРМЫ ЛОГИНА (LOGIN)
-                .formLogin()
-                .loginPage("/auth/login")                      // Кастомная страница логина
-                .loginProcessingUrl("/process_login")           // URL для обработки формы логина
-                .defaultSuccessUrl("/hello", true)              // Перенаправление после успешного входа
-                .failureUrl("/login?error")                     // Перенаправление при ошибке входа
-                .and()
+                // 2. Настройка логина
+                .formLogin(login -> login
+                        .loginPage("/auth/login")
+                        .loginProcessingUrl("/process_login")
+                        .defaultSuccessUrl("/hello", true)
+                        .failureUrl("/login?error")
+                )
 
-                // 3. НАСТРОЙКА ВЫХОДА (LOGOUT)
-                .logout()
-                .logoutUrl("/logout")                          // URL для выхода
-                .logoutSuccessUrl("/login");                   // Перенаправление после выхода
+                // 3. Настройка выхода
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                );
+
+        return http.build();
     }
 
-    //настраиваем аутентификацию
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(personDetailsService)
-                .passwordEncoder(getPasswordEncoder());
+    // Конфигурация AuthenticationManager через билдер
+    @Bean
+    public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder builder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        builder.userDetailsService(personDetailsService)
+                .passwordEncoder(passwordEncoder());
+        return builder.build();
     }
 
     @Bean
-    public PasswordEncoder getPasswordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
