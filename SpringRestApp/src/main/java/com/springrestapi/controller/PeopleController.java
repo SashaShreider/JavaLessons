@@ -1,6 +1,7 @@
 package com.springrestapi.controller;
 
 
+import com.springrestapi.dto.PersonDTO;
 import com.springrestapi.exception.PersonNotCreatedException;
 import com.springrestapi.exception.PersonNotFoundException;
 import com.springrestapi.model.Person;
@@ -37,7 +38,7 @@ public class PeopleController {
     }
 
     @PostMapping()
-    public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid Person person,
+    public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid PersonDTO personDTO,
                                                BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMsg = bindingResult.getFieldErrors().stream()
@@ -45,7 +46,7 @@ public class PeopleController {
                     .collect(Collectors.joining("; "));
             throw new PersonNotCreatedException(errorMsg);
         }
-        peopleService.save(person);
+        peopleService.save(personDTO.toEntity("Admin-Sasha"));
 
         return ResponseEntity.ok(HttpStatus.CREATED);
     }

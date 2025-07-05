@@ -9,6 +9,8 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @Entity
@@ -31,4 +33,14 @@ public class Person {
     @Email
     @NotEmpty(message = "Email should be not empty")
     private String email;
+
+    @Column
+    private LocalDateTime createdAt;
+
+    @Column
+    private LocalDateTime updatedAt;
+
+    @Column
+    @NotEmpty
+    private String createdWho;
 }
