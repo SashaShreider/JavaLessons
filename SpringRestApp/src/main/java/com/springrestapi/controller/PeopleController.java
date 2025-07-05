@@ -8,6 +8,7 @@ import com.springrestapi.model.Person;
 import com.springrestapi.service.PeopleService;
 import com.springrestapi.unil.PersonErrorResponse;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,15 +22,19 @@ import java.util.stream.Collectors;
 @RequestMapping("/people")
 public class PeopleController {
     private final PeopleService peopleService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public PeopleController(PeopleService peopleService) {
+    public PeopleController(PeopleService peopleService, ModelMapper modelMapper) {
         this.peopleService = peopleService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
-    public List<Person> getPeople() {
-        return peopleService.findAll();
+    public List<PersonDTO> getPeople() {
+        return peopleService.findAll().stream()
+                .map(this::convertToPersonDTO)
+                .toList();
     }
 
     @GetMapping("/{id}")
@@ -46,7 +51,7 @@ public class PeopleController {
                     .collect(Collectors.joining("; "));
             throw new PersonNotCreatedException(errorMsg);
         }
-        peopleService.save(personDTO.toEntity("Admin-Sasha"));
+        peopleService.save(convertToPerson(personDTO));
 
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
@@ -72,4 +77,11 @@ public class PeopleController {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    private Person convertToPerson(PersonDTO personDTO ) {
+        return modelMapper.map(personDTO, Person.class);
+    }
+
+    private PersonDTO convertToPersonDTO(Person person) {
+        return modelMapper.map(person, PersonDTO.class);
+    }
 }
