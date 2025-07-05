@@ -44,7 +44,7 @@ public class PeopleController {
 
     @PostMapping()
     public ResponseEntity<HttpStatus> createPerson(@RequestBody @Valid PersonDTO personDTO,
-                                               BindingResult bindingResult) {
+                                                   BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             String errorMsg = bindingResult.getFieldErrors().stream()
                     .map(error -> error.getField() + ": " + error.getDefaultMessage())
@@ -77,7 +77,7 @@ public class PeopleController {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
-    private Person convertToPerson(PersonDTO personDTO ) {
+    private Person convertToPerson(PersonDTO personDTO) {
         return modelMapper.map(personDTO, Person.class);
     }
 
